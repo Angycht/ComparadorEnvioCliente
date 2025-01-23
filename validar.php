@@ -52,8 +52,6 @@ if ($peso_volumetrico > $peso_real) {
 
         // Obtener la tarifa correspondiente para Paquete Premium
         $tarifaPremium = $tarifa->obtenerTarifaPaqPremium($peso_aplicable, $zonaEnvio);
-          // Obtener la tarifa correspondiente para Paquete Estándar
-        
 
         // Obtener la tarifa correspondiente para Paquete Ligero (solo si el peso está dentro del rango)
         $tarifaLigero = null;
@@ -66,10 +64,8 @@ if ($peso_volumetrico > $peso_real) {
             
             $tarifaExtraEstandar=$tarifa1->pesoExtraEstandar( $zonaEnvio)*($peso_aplicable-15);
             $tarifaExtraPremium=$tarifa1->pesoExtraPremium( $zonaEnvio)*($peso_aplicable-15);
-          
             $tarifaEstandar=$tarifa->obtenerTarifaPaqEstandar(15, $zonaEnvio)+$tarifaExtraEstandar;
             $tarifaPremium = $tarifa->obtenerTarifaPaqPremium(15, $zonaEnvio)+$tarifaExtraPremium;
-           
         }
         // Especificar el tipo de contenido como HTML
         header('Content-Type: text/html; charset=UTF-8');
@@ -231,6 +227,8 @@ if ($tarifaLigero) {
     echo '<p class="error-message"> No se encontró una tarifa para los datos proporcionados.</p>';
     echo '</div>';
 }
+
+
     }
 }
 ?>

@@ -15,7 +15,7 @@ class TarifasEnvio
       
         
         // Construir la consulta SQL con el nombre de la zona dinámicamente
-        $sql = "SELECT $zona FROM paqestandar WHERE peso >= :peso ";
+        $sql = "SELECT $zona FROM paqestandar WHERE peso >= :peso ORDER BY peso LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':peso' => $peso]);
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -40,7 +40,7 @@ class TarifasEnvio
         }
         
         // Construir la consulta SQL con el nombre de la zona dinámicamente
-        $sql = "SELECT $zona FROM paqpremium WHERE peso >= :peso ";
+        $sql = "SELECT $zona FROM paqpremium WHERE peso >= :peso ORDER BY peso LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':peso' => $peso]);
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -99,6 +99,8 @@ class TarifasEnvio
             return null; // Si no se encuentra ningún resultado
         }
     }
+
+    
     public function pesoExtraEstandar( $zona) {
         $zona = strtolower(trim($zona));
         $zonasValidas = ['zona1', 'zona2', 'zona3_plus', 'zona4', 'zona5','zona6','zona7'];
@@ -142,8 +144,6 @@ class TarifasEnvio
         }
         
     }
-   
-    
 }
 
 ?>

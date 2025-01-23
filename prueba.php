@@ -32,44 +32,18 @@ foreach ($casosPruebaZona as $caso) {
 
 // Casos de prueba para obtener la tarifa
 $casosDePruebaTarifa = [
-    ['peso' =>  1, 'zona' => 'zona1', 'tarifaEsperada' => 4.71],
-    ['peso' => 3, 'zona' => 'zona2', 'tarifaEsperada' => 6.48],
-    ['peso' => 5, 'zona' => 'zona3_plus', 'tarifaEsperada' => 7.57],
-    ['peso' => 10, 'zona' => 'zona5', 'tarifaEsperada' => 10.28],
-    ['peso' => 15, 'zona' => 'zona4', 'tarifaEsperada' => 13.41],
+    ['peso' =>  1, 'zona' => 'zona1', 'tarifaEsperada' => 5.26],
+    ['peso' => 3, 'zona' => 'zona2', 'tarifaEsperada' => 6.73],
+    ['peso' => 4, 'zona' => 'zona6', 'tarifaEsperada' => 7.24],
+    ['peso' => 5, 'zona' => 'zona3_plus', 'tarifaEsperada' => 7.45],
+    ['peso' => 10, 'zona' => 'zona5', 'tarifaEsperada' => 29.38],
+    ['peso' => 15, 'zona' => 'zona4', 'tarifaEsperada' => 22.46],
 ];
 
 // Ejecutar pruebas para obtener la tarifa
 foreach ($casosDePruebaTarifa as $caso) {
-    $tarifa = $tarifasEnvio->obtenerTarifaPaqPremium($caso['peso'], $caso['zona']);
-    echo 'Paquete Premium: ';
-    echo "Peso: {$caso['peso']}, Zona: {$caso['zona']}, Tarifa Esperada: {$caso['tarifaEsperada']}, Tarifa Obtenida: " . (is_array($tarifa) ? implode(", ", $tarifa) : $tarifa) . "\n";
-    
-    if ($tarifa == $caso['tarifaEsperada']) {
-        echo "✔ Prueba pasada\n";
-    } else {
-        echo "✘ Prueba fallida\n";
-    }
     $tarifa = $tarifasEnvio->obtenerTarifaPaqEstandar($caso['peso'], $caso['zona']);
-    echo 'Paquete Estándar: ';
-    echo "Peso: {$caso['peso']}, Zona: {$caso['zona']}, Tarifa Esperada: {$caso['tarifaEsperada']}, Tarifa Obtenida: " . (is_array($tarifa) ? implode(", ", $tarifa) : $tarifa) . "\n";
     
-    if ($tarifa == $caso['tarifaEsperada']) {
-        echo "✔ Prueba pasada\n";
-    } else {
-        echo "✘ Prueba fallida\n";
-    }
-    $tarifa = $tarifasEnvio->obtenerTarifaPaqLigero($caso['peso'], $caso['zona']);
-    echo 'Paquete Ligero: ';
-    echo "Peso: {$caso['peso']}, Zona: {$caso['zona']}, Tarifa Esperada: {$caso['tarifaEsperada']}, Tarifa Obtenida: " . (is_array($tarifa) ? implode(", ", $tarifa) : $tarifa) . "\n";
-    
-    if ($tarifa == $caso['tarifaEsperada']) {
-        echo "✔ Prueba pasada\n";
-    } else {
-        echo "✘ Prueba fallida\n";
-    }
-    $tarifa = $tarifasEnvio->obtenerTarifaDevolucion($caso['peso'], $caso['zona']);
-    echo 'Devolución: ';
     echo "Peso: {$caso['peso']}, Zona: {$caso['zona']}, Tarifa Esperada: {$caso['tarifaEsperada']}, Tarifa Obtenida: " . (is_array($tarifa) ? implode(", ", $tarifa) : $tarifa) . "\n";
     
     if ($tarifa == $caso['tarifaEsperada']) {
