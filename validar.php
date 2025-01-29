@@ -58,7 +58,7 @@ if ($peso_volumetrico > $peso_real) {
 
         // Obtener la tarifa correspondiente para Paquete Ligero (solo si el peso está dentro del rango)
         $tarifaLigero = null;
-        if ($peso_aplicable <= 2 && $peso_aplicable >= 0.05) {
+        if ($peso_aplicable <= 2 && $peso_aplicable >= 0) {
             $tarifaLigero = $tarifa->obtenerTarifaPaqLigero($peso_aplicable, $zonaEnvio);
         }
 
