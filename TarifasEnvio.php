@@ -32,7 +32,7 @@ class TarifasEnvio
 
         $zona = strtolower(trim($zona));
         // Asegúrate de que el valor de $zona es válido y corresponde con una columna
-        $zonasValidas = ['zona1', 'zona2', 'zona3_plus', 'zona4', 'zona5','zona6'];
+        $zonasValidas = ['zona1', 'zona2', 'zona3_plus', 'zona4', 'zona5','zona6','zona7'];
         
         // Verificar que la zona es válida antes de construir la consulta
         if (!in_array($zona, $zonasValidas)) {
@@ -56,7 +56,7 @@ class TarifasEnvio
 
         $zona = strtolower(trim($zona));
         // Asegúrate de que el valor de $zona es válido y corresponde con una columna
-        $zonasValidas = ['zona1', 'zona2', 'zona3_plus', 'zona4', 'zona5','zona6'];
+        $zonasValidas = ['zona1', 'zona2', 'zona3_plus', 'zona4', 'zona5','zona6','zona7'];
         
         // Verificar que la zona es válida antes de construir la consulta
         if (!in_array($zona, $zonasValidas)) {

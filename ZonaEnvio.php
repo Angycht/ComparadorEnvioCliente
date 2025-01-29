@@ -5,7 +5,7 @@ header("Content-Type: application/json");
 
 class ZonaEnvio {
 
-public function determinarZonaEnvio($origenCP, $destinoCP){
+public function determinarZonaEnvio($origenCP, $destinoCP,$destinoPais){
     // Definir las provincias y sus códigos postales
     $provincias = [
         'Álava' => range(1000, 1999),
@@ -96,7 +96,11 @@ public function determinarZonaEnvio($origenCP, $destinoCP){
     if ($this->esProvinciaLimitrofe($origenCP, $destinoCP,$provincias)) {
         return 'Zona2'; // Provincias limítrofes
     }
-
+    if ($this->esPortugalPeninsular($destinoPais)) {
+        if($destinoPais=="Portugal"){
+            return 'Zona7';
+        } 
+    }
     // Verificar si el origen y destino están en la península o Andorra
     if ($this->esIntraPeninsular($origenCP, $destinoCP, $baleares)) {
         return 'Zona3'; // Envíos Intra Peninsulares o Andorra
@@ -117,15 +121,9 @@ public function determinarZonaEnvio($origenCP, $destinoCP){
         return 'Zona6'; // Envíos Interislas en Canarias
     }
 
-    // Verificar si el origen está en la Península y el destino en Portugal Peninsular
-    if ($this->esPortugalPeninsular($origenCP, $destinoCP)) {
-        return 'Zona7'; // Envíos a Portugal Peninsular con origen en Península
-    }
+   
 
-    // Verificar si el origen está en Baleares y el destino en Portugal Peninsular
-    if ($this->esPortugalPeninsularDesdeBaleares($origenCP, $destinoCP)) {
-        return 'Zona8'; // Envíos a Portugal Peninsular con origen en Baleares
-    }
+    
 
     return 'Zona desconocida'; // Si no se encuentra ninguna coincidencia
 }
@@ -314,18 +312,7 @@ private function paisDesdeCP($codigoPostal) {
 }
 
 // Verificación si el origen está en Portugal Peninsular y el destino en otro país
-private function esPortugalPeninsular($origenCP, $destinoCP) {
-    // Obtener los países de origen y destino
-    $origenPais = $this->paisDesdeCP($origenCP);
-    $destinoPais = $this->paisDesdeCP($destinoCP);
 
-    // Verificar si el origen está en Portugal Peninsular y el destino está en España
-    if ($origenPais === 'Portugal' && $destinoPais === 'España') {
-        return 'Zona7'; // Envíos a Portugal Peninsular desde España
-    }
-
-    return 'Fuera de la zona'; // Si no es Portugal Peninsular y España
-}
 
 
 // Verificar si el envío es a Portugal desde Baleares
@@ -336,6 +323,11 @@ private function esPortugalPeninsularDesdeBaleares($origenCP, $destinoCP){
 // Obtener el rango de CP de una provincia (para simplificar)
 private function getRangoDeCP($provincia){
     // ... Lógica de los rangos por provincias
+}
+
+private function esPortugalPeninsular($destinoPais) {
+
+    return 1;
 }
 
 }

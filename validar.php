@@ -8,13 +8,16 @@ $determinarZona = new ZonaEnvio();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['origenCP']) && isset($_POST['destinoCP']) && isset($_POST['peso'])) {
 
-        $origenCP = $_POST['origenCP'];
-        $destinoCP = $_POST['destinoCP'];
+        $origenCP =htmlspecialchars($_POST['origenCP']) ;
+        $destinoCP =htmlspecialchars($_POST['destinoCP']) ;
+        $origenPais =htmlspecialchars($_POST['origenPais']) ;
+        $destinoPais =htmlspecialchars ($_POST['destinoPais']);
        // Datos enviados por el cliente
-$peso_real = $_POST['peso']; // Peso real (en kilogramos)
-$largo = $_POST['largo'];    // Largo (en centímetros)
-$ancho = $_POST['ancho'];    // Ancho (en centímetros)
-$alto = $_POST['alto'];      // Alto (en centímetros)
+       // Datos enviados por el cliente
+       $peso_real = htmlspecialchars( $_POST['peso']); // Peso real (en kilogramos)
+       $largo = htmlspecialchars($_POST['largo']) ;    // Largo (en centímetros)
+       $ancho =htmlspecialchars($_POST['ancho']) ;    // Ancho (en centímetros)
+       $alto =htmlspecialchars($_POST['alto']) ; 
 
 // Calcular el peso volumétrico
 $peso_volumetrico = ($largo * $ancho * $alto) / 6000;
@@ -45,7 +48,7 @@ if ($peso_volumetrico > $peso_real) {
         }
 
         // Obtener la zona de origen y destino
-        $zonaEnvio = $determinarZona->determinarZonaEnvio($origenCP, $destinoCP);
+        $zonaEnvio = $determinarZona->determinarZonaEnvio($origenCP, $destinoCP,$destinoPais);
 
         // Obtener la tarifa correspondiente para Paquete Estándar
         $tarifaEstandar = $tarifa->obtenerTarifaPaqEstandar($peso_aplicable, $zonaEnvio);
@@ -62,8 +65,8 @@ if ($peso_volumetrico > $peso_real) {
         if($peso_aplicable>15){
            
             
-            $tarifaExtraEstandar=$tarifa1->pesoExtraEstandar( $zonaEnvio)*($peso_aplicable-15);
-            $tarifaExtraPremium=$tarifa1->pesoExtraPremium( $zonaEnvio)*($peso_aplicable-15);
+            $tarifaExtraEstandar=$tarifa1->pesoExtraEstandar( $zonaEnvio)*(ceil($peso_aplicable)-15);
+            $tarifaExtraPremium=$tarifa1->pesoExtraPremium( $zonaEnvio)*(ceil($peso_aplicable)-15);
             $tarifaEstandar=$tarifa->obtenerTarifaPaqEstandar(15, $zonaEnvio)+$tarifaExtraEstandar;
             $tarifaPremium = $tarifa->obtenerTarifaPaqPremium(15, $zonaEnvio)+$tarifaExtraPremium;
         }
@@ -216,16 +219,13 @@ if ($tarifaPremium) {
 }
 
 // Mostrar tarifa ligera (si corresponde)
-if ($tarifaLigero) {
+if ($peso_aplicable < 2 ) {
     echo '<div class="tarifa-container">';
     echo '<h3>Tarifa Paquete Ligero</h3>';
     echo '<p>' . $tarifaLigero . ' EUR</p>';
     echo '</div>';
 } else {
-    echo '<div class="tarifa-container">';
-    echo '<h3>Tarifa Paquete Ligero</h3>';
-    echo '<p class="error-message"> No se encontró una tarifa para los datos proporcionados.</p>';
-    echo '</div>';
+    
 }
 
 
